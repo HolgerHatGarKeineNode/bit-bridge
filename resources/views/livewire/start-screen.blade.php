@@ -52,6 +52,15 @@
                                     <x-input wire:model="recipients" label="Test-Empfänger" placeholder="Test-Empfänger" corner-hint="kommagetrennt"/>
                                 </div>
 
+                                <div class="sm:col-span-3">
+                                    <x-select
+                                        :clearable="false"
+                                        :options="$emailTypeOptions"
+                                        option-label="label"
+                                        option-value="value"
+                                        wire:model="encryption" label="E-Mail Typ" placeholder="E-Mail Typ" />
+                                </div>
+
                             </div>
                         </div>
                     </div>

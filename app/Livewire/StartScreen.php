@@ -53,6 +53,16 @@ class StartScreen extends Component
     public function render()
     {
         return view('livewire.start-screen', [
+            'emailTypeOptions' => [
+                [
+                    'label' => 'Orange Pill',
+                    'value' => 'orange_pill',
+                ],
+                [
+                    'label' => 'Bitcoin Advocacy Blast',
+                    'value' => 'bitcoin_advocacy_blast',
+                ],
+            ],
             'encryptionOptions' => [
                 [
                     'label' => 'Keine',
