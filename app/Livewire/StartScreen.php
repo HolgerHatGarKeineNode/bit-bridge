@@ -19,6 +19,9 @@ class StartScreen extends Component
     public $server = '127.0.0.1';
 
     #[Rule('required')]
+    public $encryption = 'none';
+
+    #[Rule('required')]
     public $port = 2525;
 
     #[Rule('required')]
@@ -33,7 +36,7 @@ class StartScreen extends Component
             'mail.mailers.own.transport' => 'smtp',
             'mail.mailers.own.host' => $this->server,
             'mail.mailers.own.port' => $this->port,
-            'mail.mailers.own.encryption' => null,
+            'mail.mailers.own.encryption' => $this->encryption === 'none' ? null : $this->encryption,
             'mail.mailers.own.username' => $this->username,
             'mail.mailers.own.password' => $this->password,
         ]);
@@ -49,6 +52,21 @@ class StartScreen extends Component
 
     public function render()
     {
-        return view('livewire.start-screen');
+        return view('livewire.start-screen', [
+            'encryptionOptions' => [
+                [
+                    'label' => 'Keine',
+                    'value' => 'none',
+                ],
+                [
+                    'label' => 'SSL',
+                    'value' => 'ssl',
+                ],
+                [
+                    'label' => 'TLS',
+                    'value' => 'tls',
+                ],
+            ],
+        ]);
     }
 }

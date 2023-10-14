@@ -31,12 +31,21 @@
                                     <x-input type="password" wire:model="password" label="Passwort" placeholder="Passwort" />
                                 </div>
 
-                                <div class="sm:col-span-3">
+                                <div class="sm:col-span-2">
                                     <x-input wire:model="server" label="SMTP-Server" placeholder="SMTP-Server" />
                                 </div>
 
-                                <div class="sm:col-span-3">
+                                <div class="sm:col-span-2">
                                     <x-input wire:model="port" label="SMTP-Port" placeholder="SMTP-Port" />
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <x-select
+                                        :clearable="false"
+                                        :options="$encryptionOptions"
+                                        option-label="label"
+                                        option-value="value"
+                                        wire:model="encryption" label="SMTP-Verschlüsselung" placeholder="SMTP-Verschlüsselung" />
                                 </div>
 
                                 <div class="sm:col-span-6">
