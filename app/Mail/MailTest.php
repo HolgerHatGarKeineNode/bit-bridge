@@ -27,7 +27,7 @@ class MailTest extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Mail Test',
+            subject: 'Test Mail von Bit-Bridge',
         );
     }
 

@@ -2,81 +2,20 @@
 
 namespace App\Livewire;
 
-use App\Mail\MailTest;
-use Illuminate\Support\Facades\Mail;
-use Livewire\Attributes\Rule;
+use App\Models\Task;
 use Livewire\Component;
-use Native\Laravel\Facades\Notification;
 
 class StartScreen extends Component
 {
-    #[Rule('required')]
-    public $username = 'Bit-Bridge';
+    public array $campaigns = [];
 
-    public $password = null;
-
-    #[Rule('required')]
-    public $server = '127.0.0.1';
-
-    #[Rule('required')]
-    public $encryption = 'none';
-
-    #[Rule('required')]
-    public $port = 2525;
-
-    #[Rule('required')]
-    public $recipients = 'test1@test.de,test2@test.de';
-
-    public function send()
+    public function mount()
     {
-        $this->validate();
-
-        // configure mailer in config/mail.php
-        config([
-            'mail.mailers.own.transport' => 'smtp',
-            'mail.mailers.own.host' => $this->server,
-            'mail.mailers.own.port' => $this->port,
-            'mail.mailers.own.encryption' => $this->encryption === 'none' ? null : $this->encryption,
-            'mail.mailers.own.username' => $this->username,
-            'mail.mailers.own.password' => $this->password,
-        ]);
-
-        foreach (str($this->recipients)->explode(',') as $recipient) {
-            Mail::mailer('own')->to($recipient)->send(new MailTest());
-        }
-
-        Notification::title('Hello from NativePHP')
-            ->message('This is a detail message coming from your Laravel app.')
-            ->show();
+        $this->campaigns = Task::query()->get()->toArray();
     }
 
     public function render()
     {
-        return view('livewire.start-screen', [
-            'emailTypeOptions' => [
-                [
-                    'label' => 'Orange Pill',
-                    'value' => 'orange_pill',
-                ],
-                [
-                    'label' => 'Bitcoin Advocacy Blast',
-                    'value' => 'bitcoin_advocacy_blast',
-                ],
-            ],
-            'encryptionOptions' => [
-                [
-                    'label' => 'Keine',
-                    'value' => 'none',
-                ],
-                [
-                    'label' => 'SSL',
-                    'value' => 'ssl',
-                ],
-                [
-                    'label' => 'TLS',
-                    'value' => 'tls',
-                ],
-            ],
-        ]);
+        return view('livewire.start-screen');
     }
 }

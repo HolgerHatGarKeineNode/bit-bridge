@@ -21,8 +21,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->hideMenu()
             ->title('Bit-Bridge')
             ->showDevTools(false)
-            ->position(0, 0)
-            ->width(800)
+            ->width(1024)
             ->height(800)
             ->resizable(false);
     }

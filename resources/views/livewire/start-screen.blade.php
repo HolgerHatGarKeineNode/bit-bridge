@@ -13,65 +13,78 @@
         </header>
         <main>
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <form class="my-12" wire:submit="send">
-                    <div class="space-y-12">
-                        <div class="border-b border-white/10 pb-12">
-                            <h2 class="text-base font-semibold leading-7 text-white">E-Mail Server Einstellungen</h2>
-                            <p class="mt-1 text-sm leading-6 text-gray-400">
-                                Trage hier die Zugangsdaten deines E-Mail
-                                Servers ein, damit die App in deinem Namen die Empfänger anschreiben kann.
-                            </p>
+                <div class="mt-6 flex justify-end">
+                    <x-button :href="route('smtpSettings')" amber>Neue Kampagne starten</x-button>
+                </div>
+                <div class="bg-gray-900 pb-10">
+                    <h2 class="px-4 text-base font-semibold leading-7 text-white sm:px-6 lg:px-8">Laufende
+                        Kampagnen</h2>
+                    <table class="mt-6 w-full whitespace-nowrap text-left">
+                        <thead class="border-b border-white/10 text-sm leading-6 text-white">
+                        <tr>
+                            <th scope="col" class="py-2 pl-4 pr-8 font-semibold sm:pl-6 lg:pl-8">Name</th>
+                            <th scope="col" class="py-2 pl-0 pr-8 font-semibold sm:table-cell">E-Mail Liste</th>
+                            <th scope="col" class="py-2 pl-0 pr-4 font-semibold sm:pr-8 sm:text-left lg:pr-20">
+                                Gestartet
+                            </th>
+                            <th scope="col" class="py-2 pl-0 pr-8 font-semibold md:table-cell lg:pr-20">Beendet</th>
+                            <th scope="col" class="py-2 pl-0 pr-8 font-semibold md:table-cell lg:pr-20"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5">
 
-                            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                <div class="sm:col-span-3">
-                                    <x-input wire:model="username" label="Benutzername" placeholder="Benutzername" />
-                                </div>
+                        @foreach($campaigns as $campaign)
+                            <tr wire:key="campaign_{{ $campaign['id'] }}">
+                                <td class="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
+                                    <div class="flex items-center gap-x-4">
+                                        <div class="truncate text-sm font-medium leading-6 text-white">{{ $campaign['email_type'] }}</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 pl-0 pr-4 sm:table-cell sm:pr-8">
+                                    <div class="flex gap-x-3">
+                                        <div class="font-mono text-sm leading-6 text-gray-400">{{ $campaign['email_list'] }}</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
+                                    <div class="flex items-center justify-end gap-x-2 sm:justify-start">
+                                        <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
+                                            <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                                        </div>
+                                        <div class="hidden text-white sm:block">
+                                            {{ \Illuminate\Support\Carbon::parse($campaign['started_at'])->toDateTimeString() }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
+                                    @if($campaign['finished_at'])
+                                        <div class="flex items-center justify-end gap-x-2 sm:justify-start">
+                                            <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
+                                                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                                            </div>
+                                            <div class="hidden text-white sm:block">
+                                                {{ Illuminate\Support\Carbon::parse($campaign['finished_at'])->toDateTimeString() }}
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="flex items-center justify-end gap-x-2 sm:justify-start">
+                                            <div class="flex-none rounded-full p-1 text-amber-400 bg-amber-400/10">
+                                                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                                            </div>
+                                            <div class="hidden text-white sm:block">läuft</div>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
+                                    <a href="{{ route('task', ['task' => $campaign['id']]) }}" class="text-amber-400 hover:text-amber-300">
+                                        Öffnen
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
 
-                                <div class="sm:col-span-3">
-                                    <x-input type="password" wire:model="password" label="Passwort" placeholder="Passwort" />
-                                </div>
-
-                                <div class="sm:col-span-2">
-                                    <x-input wire:model="server" label="SMTP-Server" placeholder="SMTP-Server" />
-                                </div>
-
-                                <div class="sm:col-span-2">
-                                    <x-input wire:model="port" label="SMTP-Port" placeholder="SMTP-Port" />
-                                </div>
-
-                                <div class="sm:col-span-2">
-                                    <x-select
-                                        :clearable="false"
-                                        :options="$encryptionOptions"
-                                        option-label="label"
-                                        option-value="value"
-                                        wire:model="encryption" label="SMTP-Verschlüsselung" placeholder="SMTP-Verschlüsselung" />
-                                </div>
-
-                                <div class="sm:col-span-6">
-                                    <x-input wire:model="recipients" label="Test-Empfänger" placeholder="Test-Empfänger" corner-hint="kommagetrennt"/>
-                                </div>
-
-                                <div class="sm:col-span-3">
-                                    <x-select
-                                        :clearable="false"
-                                        :options="$emailTypeOptions"
-                                        option-label="label"
-                                        option-value="value"
-                                        wire:model="encryption" label="E-Mail Typ" placeholder="E-Mail Typ" />
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 flex items-center justify-center gap-x-6">
-                        <button type="submit"
-                                class="cursor-pointer rounded-md bg-indigo-500 px-3 py-2 text-xl font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-                            E-Mails abschicken
-                        </button>
-                    </div>
-                </form>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>
