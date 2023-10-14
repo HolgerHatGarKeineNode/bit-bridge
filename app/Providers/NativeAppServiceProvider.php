@@ -17,6 +17,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->showDockIcon();*/
 
         Window::open()
+            ->darkVibrancy()
             ->hideMenu()
             ->title('Bit-Bridge')
             ->showDevTools(false)

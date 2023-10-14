@@ -46,6 +46,18 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
 
+        'own' => [
+            'transport' => 'smtp',
+            'url' => null,
+            'host' => null,
+            'port' => null,
+            'encryption' => null,
+            'username' => null,
+            'password' => null,
+            'timeout' => null,
+            'local_domain' => null,
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

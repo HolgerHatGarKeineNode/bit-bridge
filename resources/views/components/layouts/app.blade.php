@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,8 +11,10 @@
 
     <!-- Styles -->
     @vite('resources/css/app.css')
+
+    <wireui:scripts />
 </head>
 <body class="antialiased bg-gray-900">
-
+{{ $slot }}
 </body>
 </html>
