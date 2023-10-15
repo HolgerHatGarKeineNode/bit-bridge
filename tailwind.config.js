@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
+const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors');
 
 const bitcoin = {
@@ -31,6 +32,20 @@ export default {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                sans: [
+                    'Inconsolata',
+                    ...defaultTheme.fontFamily.sans
+                ],
+                mono: [
+                    'Inconsolata',
+                    ...defaultTheme.fontFamily.mono
+                ],
+                article: [
+                    'Karla',
+                    ...defaultTheme.fontFamily.sans
+                ],
+            },
             colors: {
                 amber: bitcoin,
                 primary: bitcoin,

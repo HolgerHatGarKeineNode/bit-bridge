@@ -93,7 +93,15 @@ class SmtpSettings extends Component
             ],
         ]);
 
-        Mail::mailer('own')->to($this->recipients)->send(new MailTest());
+        try {
+            Mail::mailer('own')->to($this->recipients)->send(new MailTest());
+        } catch (\Exception $e) {
+            Notification::title('Bit-Bridge')
+                ->message('E-Mail konnte nicht versendet werden.')
+                ->show();
+            $this->testSent = false;
+            return;
+        }
 
         Notification::title('Bit-Bridge')
             ->message('Eine Test-E-Mail wurde an deine Adresse ' . $this->recipients . ' versendet.')

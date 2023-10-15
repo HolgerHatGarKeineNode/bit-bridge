@@ -78,7 +78,7 @@
                                     </div>
                                 </td>
                                 <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
-                                    <a href="{{ route('task', ['task' => $campaign['id']]) }}" class="text-amber-400 hover:text-amber-300">
+                                    <a href="{{ route('task', ['task' => $campaign['id']]) }}" class="text-amber-500 hover:text-amber-400">
                                         Öffnen
                                     </a>
                                 </td>
