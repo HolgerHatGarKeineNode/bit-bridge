@@ -166,16 +166,6 @@ class SmtpSettings extends Component
     {
         $this->validate();
 
-        // configure mailer in config/mail.php
-        config([
-            'mail.mailers.own.transport' => 'smtp',
-            'mail.mailers.own.host' => $this->server,
-            'mail.mailers.own.port' => $this->port,
-            'mail.mailers.own.encryption' => $this->encryption === 'none' ? null : $this->encryption,
-            'mail.mailers.own.username' => $this->username,
-            'mail.mailers.own.password' => $this->password,
-        ]);
-
         $addresses = EmailAddress::query()
             ->withAnyTags([$this->list])
             ->whereDoesntHave('emails')
