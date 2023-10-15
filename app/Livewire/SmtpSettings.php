@@ -57,7 +57,7 @@ class SmtpSettings extends Component
                 'mail.mailers.own.transport' => 'smtp',
                 'mail.mailers.own.host' => null,
                 'mail.mailers.own.port' => 587,
-                'mail.mailers.own.encryption' => 'none',
+                'mail.mailers.own.encryption' => null,
                 'mail.mailers.own.username' => '',
                 'mail.mailers.own.password' => null,
                 'mail.from' => [
@@ -74,7 +74,7 @@ class SmtpSettings extends Component
         $this->username = $settingsArray['mail.mailers.own.username'];
         $this->server = $settingsArray['mail.mailers.own.host'];
         $this->port = $settingsArray['mail.mailers.own.port'];
-        $this->encryption = $settingsArray['mail.mailers.own.encryption'];
+        $this->encryption = $settingsArray['mail.mailers.own.encryption'] ?? 'none';
         $this->password = $settingsArray['mail.mailers.own.password'];
     }
 
@@ -155,7 +155,7 @@ class SmtpSettings extends Component
         $settingsArray['mail.mailers.own.username'] = $this->username;
         $settingsArray['mail.mailers.own.host'] = $this->server;
         $settingsArray['mail.mailers.own.port'] = $this->port;
-        $settingsArray['mail.mailers.own.encryption'] = $this->encryption;
+        $settingsArray['mail.mailers.own.encryption'] = $this->encryption === 'none' ? null : $this->encryption;
         $settingsArray['mail.mailers.own.password'] = $this->password;
         Storage::put($jsonFilePath, Crypt::encryptString((json_encode($settingsArray, JSON_THROW_ON_ERROR))));
 
