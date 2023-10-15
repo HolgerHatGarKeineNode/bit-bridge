@@ -19,6 +19,7 @@
         "nunomaduro/collision": "^7.0",
         "spatie/laravel-ignition": "^2.0",
         "spatie/laravel-tags": "^4.5",
+        "spatie/simple-excel": "^3.2",
         "wireui/wireui": "^1.18"
     },
     "autoload": {

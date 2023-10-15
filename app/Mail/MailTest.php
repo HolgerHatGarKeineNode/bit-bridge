@@ -16,10 +16,8 @@ class MailTest extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(public ?string $text = null)
+    {}
 
     /**
      * Get the message envelope.
@@ -36,6 +34,8 @@ class MailTest extends Mailable
      */
     public function content(): Content
     {
+        $this->text = $this->text ?? 'Dies ist eine Test-Mail von Bit-Bridge.';
+
         return new Content(
             text: 'mails.test',
         );

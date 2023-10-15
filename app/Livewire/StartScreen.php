@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Tag;
 use App\Models\Task;
+use App\Models\Text;
 use Livewire\Component;
 
 class StartScreen extends Component
@@ -19,6 +20,7 @@ class StartScreen extends Component
     {
         return view('livewire.start-screen', [
             'countLists' => Tag::query()->count(),
+            'countTexts' => Text::query()->count(),
         ]);
     }
 }

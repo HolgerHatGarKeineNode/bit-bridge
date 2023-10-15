@@ -7,6 +7,7 @@ use App\Models\Email;
 use App\Models\EmailAddress;
 use App\Models\Tag;
 use App\Models\Task;
+use App\Models\Text;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -94,7 +95,7 @@ class SmtpSettings extends Component
         ]);
 
         try {
-            Mail::mailer('own')->to($this->recipients)->send(new MailTest());
+            Mail::mailer('own')->to($this->recipients)->send(new MailTest(null));
         } catch (\Exception $e) {
             Notification::title('Bit-Bridge')
                 ->message('E-Mail konnte nicht versendet werden.')
@@ -129,12 +130,12 @@ class SmtpSettings extends Component
             ->whereDoesntHave('emails')
             ->get();
         $task = Task::query()->create([
-            'email_type' => $this->type,
+            'text_type' => $this->type,
             'email_list' => $this->list,
             'started_at' => now(),
         ]);
         foreach ($addresses as $address) {
-            $randomDateTime = now()->addSeconds(rand(0, 60 * 60));
+            $randomDateTime = now()->addSeconds(rand(0, 60 * 15));
             Email::query()->create([
                 'task_id' => $task->id,
                 'email_address_id' => $address->id,
@@ -157,16 +158,14 @@ class SmtpSettings extends Component
                 'label' => $tag->name,
                 'value' => $tag->name,
             ]),
-            'emailTypeOptions' => [
-                [
-                    'label' => 'Orange Pill',
-                    'value' => 'orange_pill',
-                ],
-                [
-                    'label' => 'Bitcoin Advocacy Blast',
-                    'value' => 'bitcoin_advocacy_blast',
-                ],
-            ],
+            'emailTypeOptions' => Text::query()
+                ->select('name')
+                ->distinct()
+                ->get()
+                ->map(fn(Text $text) => [
+                    'label' => $text->name,
+                    'value' => $text->name,
+                ]),
             'encryptionOptions' => [
                 [
                     'label' => 'Keine',

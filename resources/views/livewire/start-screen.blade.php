@@ -24,6 +24,10 @@
                         <div>
                             <x-badge outline red>E-Mail Listen fehlen</x-badge>
                         </div>
+                    @elseif($countTexts < 1)
+                        <div>
+                            <x-badge outline red>E-Mail Texte fehlen</x-badge>
+                        </div>
                     @else
                         <x-button
                             :href="route('smtpSettings')" amber>
@@ -51,12 +55,14 @@
                             <tr wire:key="campaign_{{ $campaign['id'] }}">
                                 <td class="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
                                     <div class="flex items-center gap-x-4">
-                                        <div class="truncate text-sm font-medium leading-6 text-white">{{ $campaign['email_type'] }}</div>
+                                        <div
+                                            class="truncate text-sm font-medium leading-6 text-white">{{ $campaign['text_type'] }}</div>
                                     </div>
                                 </td>
                                 <td class="py-4 pl-0 pr-4 sm:table-cell sm:pr-8">
                                     <div class="flex gap-x-3">
-                                        <div class="font-mono text-sm leading-6 text-gray-400">{{ $campaign['email_list'] }}</div>
+                                        <div
+                                            class="font-mono text-sm leading-6 text-gray-400">{{ $campaign['email_list'] }}</div>
                                     </div>
                                 </td>
                                 <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
@@ -78,7 +84,8 @@
                                     </div>
                                 </td>
                                 <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
-                                    <a href="{{ route('task', ['task' => $campaign['id']]) }}" class="text-amber-500 hover:text-amber-400">
+                                    <a href="{{ route('task', ['task' => $campaign['id']]) }}"
+                                       class="text-amber-500 hover:text-amber-400">
                                         Öffnen
                                     </a>
                                 </td>

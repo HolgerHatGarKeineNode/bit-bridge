@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Task>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Text>
  */
-class TaskFactory extends Factory
+class TextFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'text_type' => 'orange_pill',
-            'email_list' => 'FDP',
-            'started_at' => now(),
+            //
         ];
     }
 }
