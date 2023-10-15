@@ -92,7 +92,12 @@
                                         <div
                                             class="group divide-y divide-gray-200 space-y-4 relative bg-black p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
                                             @foreach($ts as $t)
-                                                <div wire:key="text_{{ $t['id'] }}">
+                                                <div wire:key="text_{{ $t['id'] }}" class="py-4">
+                                                    <div>
+                                                        <x-badge outline amber>
+                                                            Betreff: {{ $t['subject'] }}
+                                                        </x-badge>
+                                                    </div>
                                                     <p class="mt-2 text-base text-gray-200">
                                                         {!! nl2br($t['text']) !!}
                                                     </p>

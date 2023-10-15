@@ -18,10 +18,12 @@
                         <x-button :href="route('start')" outline icon="arrow-left">Zurück</x-button>
                     </div>
                     <div class="flex justify-end space-x-2">
-                        @if($task['status'] === 'running')
-                            <x-button amber icon="stop" wire:click="pause">Stoppen</x-button>
-                        @elseif($task['status'] === 'paused')
-                            <x-button amber icon="play" wire:click="play">Starten</x-button>
+                        @if(collect($emails)->whereNotNull('sent_at')->count() !== collect($emails)->count())
+                            @if($task['status'] === 'running')
+                                <x-button amber icon="stop" wire:click="pause">Stoppen</x-button>
+                            @elseif($task['status'] === 'paused')
+                                <x-button amber icon="play" wire:click="play">Starten</x-button>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -30,6 +32,9 @@
                         <h2 class="px-4 text-base font-semibold leading-7 text-white sm:px-6 lg:px-8">
                             zu versendende E-Mails
                         </h2>
+                        <div class="font-bold text-white">
+                            Kampagne: <span class="text-amber-500">{{ $task['text_type'] }}</span> an <span class="text-amber-500">{{ $task['email_list'] }}</span>
+                        </div>
                         <div>
                             <x-badge outline green>
                                 Fortschritt: {{ round(collect($emails)->whereNotNull('sent_at')->count() / collect($emails)->count() * 100) }}%

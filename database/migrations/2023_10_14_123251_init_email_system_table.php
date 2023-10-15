@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('address');
             $table->string('name')->nullable();
+            $table->string('salutation')->nullable();
             $table->timestamps();
         });
         Schema::create('emails', function (Blueprint $table) {
@@ -27,6 +28,7 @@ return new class extends Migration {
         Schema::create('texts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('subject');
             $table->longText('text');
             $table->timestamps();
         });

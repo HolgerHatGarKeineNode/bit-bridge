@@ -61,7 +61,11 @@ class EmailLists extends Component
 
         $fileContents = file($this->file->path());
         // check if csv file is valid, it should be separated by comma and the header should contain email and name
-        if (!str_starts_with($fileContents[0], 'email,name')) {
+        if (
+            !str($fileContents[0])->contains('email')
+            || !str($fileContents[0])->contains('name')
+            || !str($fileContents[0])->contains('salutation')
+        ) {
             $this->isInvalidCSV = true;
             return;
         }
@@ -69,15 +73,16 @@ class EmailLists extends Component
         $this->countImported = 0;
         foreach ($fileContents as $line) {
             // skip first since it's the header
-            if (str_starts_with($line, 'email')) {
+            if (str($line)->contains('email')) {
                 continue;
             }
             $data = str_getcsv($line);
-            [$email, $name] = $data;
+            [$email, $name, $salutation] = $data;
             $email = EmailAddress::query()->firstOrCreate([
                 'address' => $email,
             ], [
                 'name' => $name,
+                'salutation' => $salutation,
             ]);
             // check if email already has a tag
             if ($email->tags()->count() > 0) {

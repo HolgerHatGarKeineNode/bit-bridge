@@ -49,7 +49,7 @@
                             <th scope="col" class="py-2 pl-0 pr-8 font-semibold md:table-cell lg:pr-20"></th>
                         </tr>
                         </thead>
-                        <tbody class="divide-y divide-white/5">
+                        <tbody class="divide-y divide-white/5" wire:poll.keep-alive.15s="poll">
 
                         @foreach($campaigns as $campaign)
                             <tr wire:key="campaign_{{ $campaign['id'] }}">
@@ -76,11 +76,26 @@
                                     </div>
                                 </td>
                                 <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
-                                    <div class="flex items-center justify-end gap-x-2 sm:justify-start">
-                                        <div class="flex-none rounded-full p-1 text-amber-400 bg-amber-400/10">
-                                            <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                                    @if(collect($campaign['emails'])->whereNotNull('sent_at')->count() === collect($campaign['emails'])->count())
+                                        <div class="flex items-center justify-end gap-x-2 sm:justify-start">
+                                            <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
+                                                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                                            </div>
+                                            <div class="text-white sm:block">fertig</div>
                                         </div>
-                                        <div class="hidden text-white sm:block">läuft</div>
+                                    @else
+                                        <div class="flex items-center justify-end gap-x-2 sm:justify-start">
+                                            <div class="flex-none rounded-full p-1 text-amber-400 bg-amber-400/10">
+                                                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                                            </div>
+                                            <div class="text-white sm:block">läuft</div>
+                                        </div>
+                                    @endif
+                                    <div>
+                                        <x-badge outline amber>
+                                            {{ collect($campaign['emails'])->whereNotNull('sent_at')->count() }}
+                                            / {{ collect($campaign['emails'])->count() }} E-Mails versendet
+                                        </x-badge>
                                     </div>
                                 </td>
                                 <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">

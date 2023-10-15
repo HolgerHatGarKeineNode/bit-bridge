@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\Task;
 use App\Models\Text;
 use Livewire\Component;
+use Spatie\Crypto\Rsa\KeyPair;
 
 class StartScreen extends Component
 {
@@ -13,7 +14,18 @@ class StartScreen extends Component
 
     public function mount()
     {
-        $this->campaigns = Task::query()->get()->toArray();
+        $this->campaigns = Task::query()
+            ->with(['emails'])
+            ->get()
+            ->toArray();
+    }
+
+    public function poll()
+    {
+        $this->campaigns = Task::query()
+            ->with(['emails'])
+            ->get()
+            ->toArray();
     }
 
     public function render()

@@ -42,7 +42,11 @@ class EmailTexts extends Component
         $this->countImported = 0;
         $csv = SimpleExcelReader::create($this->file->path(), 'csv');
         $headers = $csv->getOriginalHeaders();
-        if (!isset($headers[0]) || $headers[0] !== 'text') {
+        if (
+            !isset($headers[0], $headers[1])
+            || $headers[0] !== 'text'
+            || $headers[1] !== 'subject'
+        ) {
             $this->isInvalidCSV = true;
             return;
         }
@@ -56,6 +60,7 @@ class EmailTexts extends Component
                 'text' => $rowProperties['text'],
             ], [
                 'name' => $this->name,
+                'subject' => $rowProperties['subject'],
             ]);
             $this->countImported++;
         });

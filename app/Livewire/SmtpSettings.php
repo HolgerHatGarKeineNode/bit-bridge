@@ -95,7 +95,7 @@ class SmtpSettings extends Component
         ]);
 
         try {
-            Mail::mailer('own')->to($this->recipients)->send(new MailTest(null));
+            Mail::mailer('own')->to($this->recipients)->send(new MailTest());
         } catch (\Exception $e) {
             Notification::title('Bit-Bridge')
                 ->message('E-Mail konnte nicht versendet werden.')
@@ -135,7 +135,7 @@ class SmtpSettings extends Component
             'started_at' => now(),
         ]);
         foreach ($addresses as $address) {
-            $randomDateTime = now()->addSeconds(rand(0, 60 * 15));
+            $randomDateTime = now()->addSeconds(rand(0, 60 * 1));
             Email::query()->create([
                 'task_id' => $task->id,
                 'email_address_id' => $address->id,

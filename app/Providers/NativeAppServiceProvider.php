@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Native\Laravel\Facades\Window;
 use Native\Laravel\Contracts\ProvidesPhpIni;
+use Spatie\Crypto\Rsa\KeyPair;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
 {

@@ -74,7 +74,13 @@ class SendEmail extends Command
                     ->inRandomOrder()
                     ->first();
                 if ($randomText) {
-                    Mail::mailer('own')->to($email->emailAddress->address)->send(new MailTest($randomText->text));
+                    try {
+                        Mail::mailer('own')
+                            ->to($email->emailAddress->address)
+                            ->send(new MailTest($email->emailAddress, $randomText));
+                    } catch (\Exception $e) {
+                        continue;
+                    }
                     $email->update([
                         'sent_at' => now()
                     ]);

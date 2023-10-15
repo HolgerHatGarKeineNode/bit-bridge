@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\EmailAddress;
+use App\Models\Text;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,8 +18,9 @@ class MailTest extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public ?string $text = null)
-    {}
+    public function __construct(public ?EmailAddress $emailAddress = null, public ?Text $text = null)
+    {
+    }
 
     /**
      * Get the message envelope.
@@ -25,7 +28,7 @@ class MailTest extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Test Mail von Bit-Bridge',
+            subject: $this->text?->subject ?? 'Test-Mail von Bit-Bridge',
         );
     }
 
@@ -34,10 +37,18 @@ class MailTest extends Mailable
      */
     public function content(): Content
     {
-        $this->text = $this->text ?? 'Dies ist eine Test-Mail von Bit-Bridge.';
+        $text = $this->text === null ? 'Dies ist eine Test-Mail von Bit-Bridge.' : $this->text->text;
+        if ($this->emailAddress) {
+            $text = str($text)->replace('{salutation}', $this->emailAddress->salutation);
+            $text = str($text)->replace('{receiver}', $this->emailAddress->name);
+            $text = str($text)->replace('{myname}', 'MYNAME');
+        }
 
         return new Content(
             text: 'mails.test',
+            with: [
+                'messageText' => $text,
+            ],
         );
     }
 
