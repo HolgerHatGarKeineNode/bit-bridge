@@ -82,6 +82,7 @@ class SendEmail extends Command
                             ->to($email->emailAddress->address)
                             ->send(new MailTest($email->emailAddress, $randomText));
                     } catch (\Exception $e) {
+                        Log::info(json_encode($settingsArray, JSON_THROW_ON_ERROR));
                         Log::error($e->getMessage());
                         continue;
                     }
