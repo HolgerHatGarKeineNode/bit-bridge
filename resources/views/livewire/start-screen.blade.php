@@ -13,8 +13,23 @@
         </header>
         <main>
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="mt-6 flex justify-end">
-                    <x-button :href="route('smtpSettings')" amber>Neue Kampagne starten</x-button>
+                <div class="mt-6 flex space-x-2 justify-end">
+                    <x-button :href="route('emailTexts')" icon="document-text" outline amber>
+                        E-Mail Texte
+                    </x-button>
+                    <x-button :href="route('emailLists')" icon="at-symbol" outline amber>
+                        E-Mail Listen
+                    </x-button>
+                    @if($countLists < 1)
+                        <div>
+                            <x-badge outline red>E-Mail Listen fehlen</x-badge>
+                        </div>
+                    @else
+                        <x-button
+                            :href="route('smtpSettings')" amber>
+                            Neue Kampagne starten
+                        </x-button>
+                    @endif
                 </div>
                 <div class="bg-gray-900 pb-10">
                     <h2 class="px-4 text-base font-semibold leading-7 text-white sm:px-6 lg:px-8">Laufende
@@ -27,7 +42,6 @@
                             <th scope="col" class="py-2 pl-0 pr-4 font-semibold sm:pr-8 sm:text-left lg:pr-20">
                                 Gestartet
                             </th>
-                            <th scope="col" class="py-2 pl-0 pr-8 font-semibold md:table-cell lg:pr-20">Beendet</th>
                             <th scope="col" class="py-2 pl-0 pr-8 font-semibold md:table-cell lg:pr-20"></th>
                         </tr>
                         </thead>
@@ -56,23 +70,12 @@
                                     </div>
                                 </td>
                                 <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
-                                    @if($campaign['finished_at'])
-                                        <div class="flex items-center justify-end gap-x-2 sm:justify-start">
-                                            <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
-                                                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
-                                            </div>
-                                            <div class="hidden text-white sm:block">
-                                                {{ Illuminate\Support\Carbon::parse($campaign['finished_at'])->toDateTimeString() }}
-                                            </div>
+                                    <div class="flex items-center justify-end gap-x-2 sm:justify-start">
+                                        <div class="flex-none rounded-full p-1 text-amber-400 bg-amber-400/10">
+                                            <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
                                         </div>
-                                    @else
-                                        <div class="flex items-center justify-end gap-x-2 sm:justify-start">
-                                            <div class="flex-none rounded-full p-1 text-amber-400 bg-amber-400/10">
-                                                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
-                                            </div>
-                                            <div class="hidden text-white sm:block">läuft</div>
-                                        </div>
-                                    @endif
+                                        <div class="hidden text-white sm:block">läuft</div>
+                                    </div>
                                 </td>
                                 <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
                                     <a href="{{ route('task', ['task' => $campaign['id']]) }}" class="text-amber-400 hover:text-amber-300">

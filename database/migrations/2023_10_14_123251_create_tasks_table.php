@@ -21,16 +21,15 @@ return new class extends Migration {
             $table->string('status')->default('running');
             $table->string('email_type');
             $table->string('email_list');
-            $table->string('started_at');
-            $table->string('finished_at')->nullable();
+            $table->dateTime('started_at');
             $table->timestamps();
         });
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id');
             $table->foreignId('email_address_id');
-            $table->string('send_at')->nullable();
-            $table->string('sent_at')->nullable();
+            $table->dateTime('send_at')->nullable();
+            $table->dateTime('sent_at')->nullable();
             $table->timestamps();
         });
     }

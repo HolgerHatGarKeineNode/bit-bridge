@@ -124,14 +124,13 @@ class SmtpSettings extends Component
             'email_type' => $this->type,
             'email_list' => $this->list,
             'started_at' => now(),
-            'finished_at' => null,
         ]);
         foreach ($addresses as $address) {
-            $randomDateTimeWithinWithPrecisionOfMinutes = now()->addMinutes(rand(0, 60 * 72));
+            $randomDateTime = now()->addSeconds(rand(0, 60 * 60));
             Email::query()->create([
                 'task_id' => $task->id,
                 'email_address_id' => $address->id,
-                'send_at' => $randomDateTimeWithinWithPrecisionOfMinutes,
+                'send_at' => $randomDateTime,
                 'sent_at' => null,
             ]);
         }

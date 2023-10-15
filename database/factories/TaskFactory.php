@@ -20,7 +20,6 @@ class TaskFactory extends Factory
             'email_type' => 'orange_pill',
             'email_list' => 'FDP',
             'started_at' => now(),
-            'finished_at' => null,
         ];
     }
 }

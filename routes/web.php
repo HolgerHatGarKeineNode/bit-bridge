@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', \App\Livewire\StartScreen::class)->name('start');
 Route::get('/emails/{task}', \App\Livewire\TaskView::class)->name('task');
 Route::get('/smtp-settings', \App\Livewire\SmtpSettings::class)->name('smtpSettings');
+
+Route::get('/email-lists', \App\Livewire\EmailLists::class)->name('emailLists');
+Route::get('/email-texts', \App\Livewire\EmailTexts::class)->name('emailTexts');

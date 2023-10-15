@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Tag;
 use App\Models\Task;
 use Livewire\Component;
 
@@ -16,6 +17,8 @@ class StartScreen extends Component
 
     public function render()
     {
-        return view('livewire.start-screen');
+        return view('livewire.start-screen', [
+            'countLists' => Tag::query()->count(),
+        ]);
     }
 }

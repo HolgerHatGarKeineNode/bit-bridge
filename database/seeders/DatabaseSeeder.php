@@ -23,33 +23,36 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Task::factory(1)
-            ->hasEmails(100)
-            ->create();
+//        Task::factory(1)
+//            ->hasEmails(100)
+//            ->create();
+
+//        $tags = [
+//            'FDP',
+//            'SPD',
+//            'CDU',
+//        ];
+//        foreach (EmailAddress::query()->get() as $item) {
+//            $randomTag = $tags[array_rand($tags)];
+//
+//            $item->attachTag($randomTag);
+//        }
 
         $tags = [
-            'FDP',
             'SPD',
             'CDU',
         ];
-        foreach (EmailAddress::query()->get() as $item) {
-            $randomTag = $tags[array_rand($tags)];
-
-            $item->attachTag($randomTag);
-        }
-
-        $tags = [
-            'SPD',
-            'CDU',
-        ];
-        // loop 100 times
-        for ($i = 0; $i < 100; $i++) {
+        // loop 40 times
+        for ($i = 0; $i < 40; $i++) {
             $email = EmailAddress::query()->create([
                 'address' => 'test' . $i . '@example.com',
                 'name' => 'Test ' . $i,
             ]);
-            $randomTag = $tags[array_rand($tags)];
-            $email->attachTag($randomTag);
+            if ($i % 2 === 0) {
+                $email->attachTag('FDP');
+            } else {
+                $email->attachTag('SPD');
+            }
         }
     }
 }

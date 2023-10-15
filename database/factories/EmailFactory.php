@@ -18,11 +18,13 @@ class EmailFactory extends Factory
     public function definition(): array
     {
         $email = EmailAddress::factory(1)->create();
+        // without faker
+        $randomDateTimeWithinNextHourWithPrecisionInMinutes = now()->addMinutes(rand(0, 60));
 
         return [
             'task_id' => 1,
             'email_address_id' => $email->first()->id,
-            'send_at' => now()->addSeconds(random_int(60 * 60, 60 * 60 * 24 * 7)),
+            'send_at' => $randomDateTimeWithinNextHourWithPrecisionInMinutes,
             'sent_at' => null,
         ];
     }
