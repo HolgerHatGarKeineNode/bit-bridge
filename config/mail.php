@@ -56,6 +56,7 @@ return [
             'password' => null,
             'timeout' => null,
             'local_domain' => null,
+            'verify_peer' => false,
         ],
 
         'ses' => [
