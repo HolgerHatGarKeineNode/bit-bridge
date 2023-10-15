@@ -20,9 +20,10 @@
                     <div>
                         @if($countImported < 1)
                             <p class="text-amber-500 text-xs">
-                                Die CSV Import-Datei muss folgende Spalten enthalten:
+                                Die Import-Datei muss folgende Spalten enthalten und muss eine CSV mit Komma als
+                                Trennzeichen sein:
                                 <br>
-                                <strong>text</strong>
+                                <strong>text</strong>,<strong>subject</strong>
                             </p>
                         @else
                             <p class="text-green-500 text-xs">

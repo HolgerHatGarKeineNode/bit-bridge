@@ -22,7 +22,7 @@
                             <p class="text-amber-500 text-xs">
                                 Die Import-Datei muss folgende Spalten enthalten und muss eine CSV mit Komma als Trennzeichen sein:
                                 <br>
-                                <strong>email</strong>, <strong>name</strong>
+                                <strong>email</strong>,<strong>name</strong>,<strong>salutation</strong>
                             </p>
                         @else
                             <p class="text-green-500 text-xs">
