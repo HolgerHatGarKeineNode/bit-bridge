@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\EmailAddress;
+use App\Models\Flag;
 use App\Models\Tag;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -55,6 +56,8 @@ class EmailLists extends Component
 
     public function updatedFile()
     {
+        $addressesWhereExistent = EmailAddress::query()->count() > 0;
+
         /*$file = Dialog::new()
             ->filter('CSV', ['csv'])
             ->open();*/
@@ -93,6 +96,16 @@ class EmailLists extends Component
         }
         $this->poll();
         $this->name = '';
+
+        Flag::query()->firstOrCreate([
+            'name' => 'lists_imported',
+        ], [
+            'value' => true,
+        ]);
+
+        if (!$addressesWhereExistent) {
+            return to_route('start', ['withoutDisclaimer' => true]);
+        }
     }
 
     public function render()

@@ -15,7 +15,7 @@
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center mt-6">
                     <div>
-                        <x-button :href="route('start')" outline icon="arrow-left">Zurück</x-button>
+                        <x-button :href="route('start', ['withoutDisclaimer' => true])" outline icon="arrow-left">Zurück</x-button>
                     </div>
                     <div class="flex justify-end space-x-2">
                         @if(collect($emails)->whereNotNull('sent_at')->count() !== collect($emails)->count())

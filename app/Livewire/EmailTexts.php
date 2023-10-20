@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Flag;
 use App\Models\Text;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -34,6 +35,8 @@ class EmailTexts extends Component
 
     public function updatedFile()
     {
+        $textsWhereExistent = Text::query()->count() > 0;
+
         /*$file = Dialog::new()
             ->filter('CSV', ['csv'])
             ->open();*/
@@ -65,6 +68,16 @@ class EmailTexts extends Component
             $this->countImported++;
         });
         $this->poll();
+
+        Flag::query()->firstOrCreate([
+            'name' => 'texts_imported',
+        ], [
+            'value' => true,
+        ]);
+
+        if (!$textsWhereExistent) {
+            return to_route('start', ['withoutDisclaimer' => true]);
+        }
     }
 
     public function poll()

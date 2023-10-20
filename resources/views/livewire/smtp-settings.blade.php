@@ -23,8 +23,9 @@
                         <div class="border-b border-white/10 pb-6">
                             <div class="flex w-full justify-between">
                                 <div class="w-6/12">
-                                    <h2 class="text-base font-semibold leading-7 text-white">E-Mail Server
-                                        Einstellungen</h2>
+                                    <h2 class="text-base font-semibold leading-7 text-white">
+                                        E-Mail Server Einstellungen
+                                    </h2>
                                     <p class="mt-1 text-sm leading-6 text-gray-400">
                                         Trage hier die Zugangsdaten deines E-Mail
                                         Servers ein, damit die App in deinem Namen die Empfänger anschreiben kann.

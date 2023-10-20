@@ -40,6 +40,13 @@ return new class extends Migration {
             $table->dateTime('started_at');
             $table->timestamps();
         });
+
+        Schema::create('flags', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->boolean('value')->default(false);
+            $table->timestamps();
+        });
     }
 
     /**
