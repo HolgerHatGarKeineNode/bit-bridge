@@ -167,6 +167,8 @@ class StartScreen extends Component
         ], [
             'value' => true,
         ]);
+
+        return to_route('emailTexts');
     }
 
     public function render()

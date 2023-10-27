@@ -19,8 +19,8 @@ class NativeAppServiceProvider implements ProvidesPhpIni
 
         Window::open()
             ->hideMenu()
-            ->width(1024)
-            ->height(768)
+            ->width(1400)
+            ->height(800)
             ->resizable(false)
             ->title('Bit-Bridge')
             ->showDevTools(false);
