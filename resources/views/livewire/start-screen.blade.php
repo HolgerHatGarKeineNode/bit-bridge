@@ -16,7 +16,7 @@
             @if($currentStep === 'disclaimer')
                 <div class="bg-gray-900">
                     <div class="mx-auto max-w-7xl px-6 py-16">
-                        <h2 class="text-2xl font-bold leading-10 tracking-tight text-white">Haftungsausschluss</h2>
+                        <h2 class="text-2xl font-bold leading-10 tracking-tight text-white">Vorsicht</h2>
                         <p class="max-w-2xl text-base leading-7 text-gray-300">Bitte beachte folgende Dinge, bei der
                             Nutzung dieser App:</p>
                         <div class="mt-4">
