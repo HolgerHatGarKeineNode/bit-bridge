@@ -119,8 +119,12 @@ class EmailLists extends Component
         $from = $settingsArray['mail.from']['name'];
 
         $this->name = 'Demo';
+        // create config_path('demo_emails.csv') if not existent
+        if (!file_exists(storage_path('demo_emails.csv'))) {
+            touch(storage_path('demo_emails.csv'));
+        }
         // write headers to demo file
-        $file = fopen(config_path('demo_emails.csv'), 'w');
+        $file = fopen(storage_path('demo_emails.csv'), 'w');
         fputcsv($file, ['email', 'name', 'salutation']);
         // write one line to demo file
         fputcsv($file, [$email, $from, 'Hallo']);
@@ -128,7 +132,7 @@ class EmailLists extends Component
 
         // load file form existing file in storage
         $this->file = new \Illuminate\Http\UploadedFile(
-            config_path('demo_emails.csv'),
+            storage_path('demo_emails.csv'),
             'demo_emails.csv',
             'text/csv',
             null,
