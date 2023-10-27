@@ -5,6 +5,8 @@ namespace App\Livewire;
 use App\Models\EmailAddress;
 use App\Models\Flag;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -107,6 +109,34 @@ class EmailLists extends Component
             return to_route('start', ['withoutDisclaimer' => true]);
         }
     }
+
+    public function loadDemo()
+    {
+        $jsonFilePath = 'settings.json';
+        $settingsFromJsonFile = Storage::get($jsonFilePath);
+        $settingsArray = json_decode(Crypt::decryptString($settingsFromJsonFile), true, 512, JSON_THROW_ON_ERROR);
+        $email = $settingsArray['recipients'];
+        $from = $settingsArray['mail.from']['name'];
+
+        $this->name = 'Demo';
+        // write headers to demo file
+        $file = fopen(config_path('demo_emails.csv'), 'w');
+        fputcsv($file, ['email', 'name', 'salutation']);
+        // write one line to demo file
+        fputcsv($file, [$email, $from, 'Hallo']);
+        fclose($file);
+
+        // load file form existing file in storage
+        $this->file = new \Illuminate\Http\UploadedFile(
+            config_path('demo_emails.csv'),
+            'demo_emails.csv',
+            'text/csv',
+            null,
+            true
+        );
+        $this->updatedFile();
+    }
+
 
     public function render()
     {

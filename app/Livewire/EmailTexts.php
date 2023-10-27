@@ -4,8 +4,10 @@ namespace App\Livewire;
 
 use App\Models\Flag;
 use App\Models\Text;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
@@ -87,6 +89,20 @@ class EmailTexts extends Component
             ->get()
             ->groupBy('name')
             ->toArray();
+    }
+
+    public function loadDemo()
+    {
+        $this->name = 'Demo';
+        // load file form existing file in storage
+        $this->file = new \Illuminate\Http\UploadedFile(
+            config_path('demo_texts.csv'),
+            'demo_texts.csv',
+            'text/csv',
+            null,
+            true
+        );
+        $this->updatedFile();
     }
 
     public function render()

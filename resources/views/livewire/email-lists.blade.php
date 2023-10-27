@@ -50,6 +50,15 @@
                         </div>
                     </div>
                 </div>
+
+                @if(count($lists) < 1)
+                    <div class="w-full flex justify-center">
+                        <x-button lg wire:click="loadDemo" amber icon="download">
+                            Load demo data
+                        </x-button>
+                    </div>
+                @endif
+
                 <div class="bg-gray-900 pb-10 mt-6">
                     <div class="flex justify-between">
                         <h2 class="px-4 text-base font-semibold leading-7 text-white sm:px-6 lg:px-8">

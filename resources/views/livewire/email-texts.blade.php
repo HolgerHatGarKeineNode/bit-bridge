@@ -60,6 +60,13 @@
                         </h2>
                     </div>
 
+                    @if(count($texts) < 1)
+                        <div class="w-full flex justify-center">
+                            <x-button lg wire:click="loadDemo" amber icon="download">
+                                Load demo data
+                            </x-button>
+                        </div>
+                    @endif
 
                     <div x-data="{ active: 0 }" class="mx-auto w-full min-h-[16rem] space-y-4">
 
