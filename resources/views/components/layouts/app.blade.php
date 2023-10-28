@@ -6,9 +6,6 @@
 
     <title>Bit-Bridge</title>
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-
     <!-- Styles -->
     @vite('resources/css/app.css')
     <style>
